@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados da Sessão</title>
+</head>
+<body>
+    <h1>Dados da Sessão</h1>
+    <div id="sessionData"></div>
+
+    <script>
+        // Fazer uma requisição para obter os dados da sessão
+        fetch('/session-data')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Nenhuma sessão ativa.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const sessionDataDiv = document.getElementById('sessionData');
+                sessionDataDiv.innerHTML = `<p>E-mail: ${data.email}</p><p>Senha: ${data.password}</p>`;
+            })
+            .catch(error => {
+                const sessionDataDiv = document.getElementById('sessionData');
+                sessionDataDiv.innerHTML = `<p>${error.message}</p>`;
+            });
+    </script>
+</body>
+</html>
